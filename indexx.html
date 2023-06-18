@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Animation</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const heartSize = 100;
+        const increment = 0.01;
+
+        let angle = 0;
+        let strokeColor = 0;
+
+        function drawHeart() {
+            const x = heartSize * Math.pow(Math.sin(angle), 3);
+            const y = -(heartSize * (0.8 * Math.cos(angle) - 0.3 * Math.cos(2 * angle) - 0.1 * Math.cos(3 * angle) - 0.1 * Math.cos(4 * angle)));
+
+            const color = `rgba(0, 0, 0, ${strokeColor})`;
+            ctx.strokeStyle = color;
+
+            ctx.beginPath();
+            ctx.moveTo(centerX + x, centerY + y);
+            ctx.lineTo(centerX + x, centerY + y + 1);
+            ctx.stroke();
+
+            angle += increment;
+            strokeColor += 0.005;
+
+            if (angle < Math.PI * 2) {
+                requestAnimationFrame(drawHeart);
+            } else {
+                ctx.fillStyle = "black";
+                ctx.font = "20px Arial";
+                ctx.fillText("Aadi      Anvi", centerX - 60, centerY + 120);
+            }
+        }
+
+        drawHeart();
+    </script>
+</body>
+</html>
